@@ -5,6 +5,7 @@ import { Content, HomeContainer } from './index.style';
 import useHomeHook, { GroupTyped } from './hook';
 import { memo, useState } from 'react';
 import User from '../user/user';
+import Warning from '../groups/warning/warning';
 
 export default function Home() {
   const {
@@ -14,9 +15,12 @@ export default function Home() {
     currentUser,
     setCurrentUser,
     onlineUsers,
+    warning,
+    setWarning,
   } = useHomeHook();
   return (
     <HomeContainer>
+      {warning && <Warning setWarning={setWarning} warning={warning} />}
       {currentUser ? (
         <>
           <Details onlineUsers={onlineUsers} currentUser={currentUser} />

@@ -7,6 +7,7 @@ export default function useHomeHook() {
   );
   const [currentUser, setCurrentUser] = useState<string>('');
   const [onlineUsers, setOnlineUsers] = useState<number>(0);
+  const [warning, setWarning] = useState<string>('');
 
   const [availableUsers, setAvailableUsers] = useState<string[]>([]);
 
@@ -39,6 +40,8 @@ export default function useHomeHook() {
       } else if (event_data.type === 'available.users') {
         setAvailableUsers(event_data.data.available_users);
         setOnlineUsers(event_data.data.online_users);
+      } else if (event_data.type === 'room.failed') {
+        setWarning(event_data.data.message);
       }
     };
     environmentWebSocket.onclose = () => {
@@ -57,10 +60,12 @@ export default function useHomeHook() {
     currentUser,
     setCurrentUser,
     onlineUsers,
+    setWarning,
+    warning,
   };
 }
 
-type webSocketData = roomEvent | availableUsersEvent;
+type webSocketData = roomEvent | availableUsersEvent | roomFailCreationEvent;
 
 type availableUsersEvent = {
   type: 'available.users';
@@ -74,6 +79,13 @@ type roomEvent = {
   type: 'room.created';
   data: {
     room: GroupTyped;
+  };
+};
+
+type roomFailCreationEvent = {
+  type: 'room.failed';
+  data: {
+    message: string;
   };
 };
 

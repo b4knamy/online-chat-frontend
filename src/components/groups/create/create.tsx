@@ -12,8 +12,20 @@ export default function CreateGroup({ setOpenForm, environmentSocket }: props) {
   const onSubmitHandler = async (e: MouseEvent) => {
     e.preventDefault();
     try {
-      const data = JSON.stringify({ new_room: value });
-      environmentSocket?.send(data);
+      const context = {
+        type: 'room.created',
+        data: {
+          new_room: value,
+        },
+      };
+      // const response = fetch("http://127.0.0.1:8000/api/rooms",
+      //   {
+      //     method: "POST",
+
+      //   }
+      // )
+
+      environmentSocket?.send(JSON.stringify(context));
     } finally {
       setOpenForm(false);
     }

@@ -57,7 +57,7 @@ export default function Room({
   }, [name]);
   return (
     <Container $isCurrentRoom={isCurrentRoom}>
-      <Chat messages={messages} />
+      <Chat messages={messages} currentUser={currentUser} />
       <Form chatSocket={chatSocket} room={name} />
     </Container>
   );

@@ -22,6 +22,7 @@ export default function User({
     });
     environmentSocket?.send(context);
     setCurrentUser(username);
+    console.log(username);
   };
 
   return (
