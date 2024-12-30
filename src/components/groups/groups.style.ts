@@ -8,7 +8,7 @@ export const Container = styled.div`
   align-items: start;
   padding: 0px 0px 50px 0px;
   border-top: 1px solid black;
-  width: 100px;
+  width: 150px;
   height: 100%;
   ${({ theme }) => ({ backgroundColor: theme.color.rgb.primaryWhite })}
 

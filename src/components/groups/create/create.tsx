@@ -18,13 +18,6 @@ export default function CreateGroup({ setOpenForm, environmentSocket }: props) {
           new_room: value,
         },
       };
-      // const response = fetch("http://127.0.0.1:8000/api/rooms",
-      //   {
-      //     method: "POST",
-
-      //   }
-      // )
-
       environmentSocket?.send(JSON.stringify(context));
     } finally {
       setOpenForm(false);

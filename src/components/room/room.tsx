@@ -3,12 +3,15 @@ import Form from './form/form';
 import Chat from './chat/chat';
 import { useEffect, useState } from 'react';
 import { MessageTyped } from '../home/hook';
+import ChatDetails from './details/details';
 
 type props = {
   isCurrentRoom: boolean;
   name: string;
   room_messages: MessageTyped[];
   currentUser: string;
+  roomOwner: string;
+  environmentSocket: WebSocket | null;
 };
 
 type chatMessageEvent = {
@@ -23,6 +26,8 @@ export default function Room({
   name,
   room_messages,
   currentUser,
+  roomOwner,
+  environmentSocket,
 }: props) {
   const [chatSocket, setChatSocket] = useState<WebSocket | null>(null);
   const [messages, setMessages] = useState<MessageTyped[]>(room_messages);
@@ -57,6 +62,11 @@ export default function Room({
   }, [name]);
   return (
     <Container $isCurrentRoom={isCurrentRoom}>
+      <ChatDetails
+        roomOwner={roomOwner}
+        environmentSocket={environmentSocket}
+        name={name}
+      />
       <Chat messages={messages} currentUser={currentUser} />
       <Form chatSocket={chatSocket} room={name} />
     </Container>

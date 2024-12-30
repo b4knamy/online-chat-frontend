@@ -5,6 +5,7 @@ export const Container = styled.div`
   height: 100%;
   padding: 20px 20px 20px 20px;
   display: flex;
+  justify-content: end;
   flex-direction: column;
   gap: 20px;
   overflow-x: auto;

@@ -8,8 +8,6 @@ type props = {
 };
 
 export default function Chat({ messages, currentUser }: props) {
-  console.log(messages);
-  console.log(currentUser);
   return (
     <Container>
       {messages.map((message) => {

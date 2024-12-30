@@ -31,17 +31,31 @@ export default function useHomeHook() {
 
     environmentWebSocket.onmessage = (event) => {
       const event_data: webSocketData = JSON.parse(event.data);
-      if (event_data.type === 'room.created') {
-        setGroups((prev) => {
-          const updatedGroups = [...prev];
-          updatedGroups.push(event_data.data.room);
-          return updatedGroups;
-        });
-      } else if (event_data.type === 'available.users') {
-        setAvailableUsers(event_data.data.available_users);
-        setOnlineUsers(event_data.data.online_users);
-      } else if (event_data.type === 'room.failed') {
-        setWarning(event_data.data.message);
+      switch (event_data.event_type) {
+        case 'room.created':
+          setGroups((prev) => {
+            const updatedGroups = [...prev];
+            updatedGroups.push(event_data.context.room);
+            return updatedGroups;
+          });
+          break;
+
+        case 'available.users':
+          setAvailableUsers(event_data.context.available_users);
+          setOnlineUsers(event_data.context.online_users);
+          break;
+        case 'room.failed':
+          setWarning(event_data.context.message);
+          break;
+
+        case 'remove.room':
+          setGroups((prev) => {
+            const updatedGroups = prev.filter(
+              (group) => group.name !== event_data.context.room,
+            );
+            return updatedGroups;
+          });
+          break;
       }
     };
     environmentWebSocket.onclose = () => {
@@ -65,27 +79,38 @@ export default function useHomeHook() {
   };
 }
 
-type webSocketData = roomEvent | availableUsersEvent | roomFailCreationEvent;
+type webSocketData =
+  | availableUsersEvent
+  | roomEvent
+  | roomFailCreationEvent
+  | removeRoomEvent;
 
 type availableUsersEvent = {
-  type: 'available.users';
-  data: {
+  event_type: 'available.users';
+  context: {
     available_users: string[];
     online_users: number;
   };
 };
 
 type roomEvent = {
-  type: 'room.created';
-  data: {
+  event_type: 'room.created';
+  context: {
     room: GroupTyped;
   };
 };
 
 type roomFailCreationEvent = {
-  type: 'room.failed';
-  data: {
+  event_type: 'room.failed';
+  context: {
     message: string;
+  };
+};
+
+type removeRoomEvent = {
+  event_type: 'remove.room';
+  context: {
+    room: string;
   };
 };
 

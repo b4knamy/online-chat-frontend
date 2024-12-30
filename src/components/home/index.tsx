@@ -23,7 +23,12 @@ export default function Home() {
       {warning && <Warning setWarning={setWarning} warning={warning} />}
       {currentUser ? (
         <>
-          <Details onlineUsers={onlineUsers} currentUser={currentUser} />
+          <Details
+            onlineUsers={onlineUsers}
+            currentUser={currentUser}
+            setCurrentUser={setCurrentUser}
+            environmentSocket={environmentSocket}
+          />
           <HomeContent
             groups={groups}
             environmentSocket={environmentSocket}
@@ -64,6 +69,8 @@ const HomeContent = memo(
             <Room
               key={group.id}
               name={group.name}
+              environmentSocket={environmentSocket}
+              roomOwner={group.admin.username}
               currentUser={currentUser}
               isCurrentRoom={currentRoom === group.name}
               room_messages={group.room_messages}

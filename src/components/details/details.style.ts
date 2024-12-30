@@ -9,22 +9,33 @@ export const Container = styled.div`
     color: theme.color.rgb.primaryBlack,
   })};
   position: relative;
-`;
 
-export const CurrentUser = styled.div`
-  ${FlexCC};
-  position: absolute;
-  right: 0;
-  margin-right: 10px;
-  width: max-content;
-  height: 100%;
-`;
+  .available-users {
+    width: max-content;
+    height: 100%;
+    position: absolute;
+    margin-left: 10px;
+    left: 0;
+    ${FlexCC}
+  }
+  .current-user {
+    ${FlexCC};
+    position: absolute;
+    right: 0;
+    margin-right: 10px;
+    width: max-content;
+    height: 100%;
 
-export const AvailableUsers = styled.div`
-  width: max-content;
-  height: 100%;
-  position: absolute;
-  margin-left: 10px;
-  left: 0;
-  ${FlexCC}
+    gap: 30px;
+
+    i {
+      transform: scale(1.5);
+      cursor: pointer;
+
+      &:hover {
+        color: darkcyan;
+      }
+    }
+    padding-right: 10px;
+  }
 `;
