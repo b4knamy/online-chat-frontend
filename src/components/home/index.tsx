@@ -43,27 +43,30 @@ type props = {
   currentUser: string;
 };
 
-const HomeContent = memo(({ groups, environmentSocket }: props) => {
-  const [currentRoom, setCurrentRoom] = useState('lobby');
+const HomeContent = memo(
+  ({ groups, environmentSocket, currentUser }: props) => {
+    const [currentRoom, setCurrentRoom] = useState('lobby');
 
-  return (
-    <Content>
-      <Groups
-        setCurrentRoom={setCurrentRoom}
-        currentRoom={currentRoom}
-        groups={groups}
-        environmentSocket={environmentSocket}
-      />
-      {groups.map((group) => {
-        return (
-          <Room
-            key={group.id}
-            name={group.name}
-            isCurrentRoom={currentRoom === group.name}
-            room_messages={group.room_messages}
-          />
-        );
-      })}
-    </Content>
-  );
-});
+    return (
+      <Content>
+        <Groups
+          setCurrentRoom={setCurrentRoom}
+          currentRoom={currentRoom}
+          groups={groups}
+          environmentSocket={environmentSocket}
+        />
+        {groups.map((group) => {
+          return (
+            <Room
+              key={group.id}
+              name={group.name}
+              currentUser={currentUser}
+              isCurrentRoom={currentRoom === group.name}
+              room_messages={group.room_messages}
+            />
+          );
+        })}
+      </Content>
+    );
+  },
+);

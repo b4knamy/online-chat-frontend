@@ -8,6 +8,7 @@ type props = {
   isCurrentRoom: boolean;
   name: string;
   room_messages: MessageTyped[];
+  currentUser: string;
 };
 
 type chatMessageEvent = {
@@ -17,12 +18,17 @@ type chatMessageEvent = {
   };
 };
 
-export default function Room({ isCurrentRoom, name, room_messages }: props) {
+export default function Room({
+  isCurrentRoom,
+  name,
+  room_messages,
+  currentUser,
+}: props) {
   const [chatSocket, setChatSocket] = useState<WebSocket | null>(null);
   const [messages, setMessages] = useState<MessageTyped[]>(room_messages);
 
   useEffect(() => {
-    const webSocketUrl = `ws://127.0.0.1:8000/ws/chat/${name}/`;
+    const webSocketUrl = `ws://127.0.0.1:8000/ws/chat/${name}/?username=${currentUser}`;
 
     const chatSocket = new WebSocket(webSocketUrl);
 
