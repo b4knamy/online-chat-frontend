@@ -25,7 +25,7 @@ export default function Details({
   return (
     <Container>
       <div className="available-users">
-        Há {onlineUsers} tecladores online :)
+        <span>Online {onlineUsers}</span> <div className="green-circle"></div>
       </div>
       <div className="current-user">
         <span>

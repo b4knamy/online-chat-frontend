@@ -17,6 +17,15 @@ export const Container = styled.div`
     margin-left: 10px;
     left: 0;
     ${FlexCC}
+    flex-direction: row;
+    gap: 5px;
+
+    .green-circle {
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      background-color: green;
+    }
   }
   .current-user {
     ${FlexCC};

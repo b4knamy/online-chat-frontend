@@ -2,35 +2,32 @@ import Room from '../room/room';
 import Details from '../details/details';
 import Groups from '../groups/groups';
 import { Content, HomeContainer } from './index.style';
-import useHomeHook, { GroupTyped } from './hook';
+import { GroupTyped } from './hook';
 import { memo, useState } from 'react';
 import User from '../user/user';
 import Warning from '../groups/warning/warning';
+import useEnvironmentContext from '../../context/environment/context';
 
 export default function Home() {
-  const {
-    groups,
-    environmentSocket,
-    availableUsers,
-    currentUser,
-    setCurrentUser,
-    onlineUsers,
-    warning,
-    setWarning,
-  } = useHomeHook();
+  const [currentUser, setCurrentUser] = useState('');
+  const { state, environmentSocket, cleanWarning } = useEnvironmentContext();
+  console.log('how many times I run?');
+
   return (
     <HomeContainer>
-      {warning && <Warning setWarning={setWarning} warning={warning} />}
+      {state.warning && (
+        <Warning warning={state.warning} cleanWarning={cleanWarning} />
+      )}
       {currentUser ? (
         <>
           <Details
-            onlineUsers={onlineUsers}
+            onlineUsers={state.onlineUsers}
             currentUser={currentUser}
             setCurrentUser={setCurrentUser}
             environmentSocket={environmentSocket}
           />
           <HomeContent
-            groups={groups}
+            groups={state.groups}
             environmentSocket={environmentSocket}
             currentUser={currentUser}
           />
@@ -38,7 +35,7 @@ export default function Home() {
       ) : (
         <User
           setCurrentUser={setCurrentUser}
-          availableUsers={availableUsers}
+          availableUsers={state.availableUsers}
           environmentSocket={environmentSocket}
         />
       )}
@@ -55,7 +52,7 @@ type props = {
 const HomeContent = memo(
   ({ groups, environmentSocket, currentUser }: props) => {
     const [currentRoom, setCurrentRoom] = useState('lobby');
-
+    console.log('rodei o HomeContent');
     return (
       <Content>
         <Groups

@@ -1,18 +1,17 @@
-import { Dispatch, SetStateAction } from 'react';
 import styled from 'styled-components';
 import { FlexCC } from '../../../settings/styles/utils';
 
 type props = {
   warning: string;
-  setWarning: Dispatch<SetStateAction<string>>;
+  cleanWarning: () => void;
 };
 
-export default function Warning({ warning, setWarning }: props) {
+export default function Warning({ warning, cleanWarning }: props) {
   return (
     <Container>
       <div>
         <span>{warning}</span>
-        <button onClick={() => setWarning('')}>Ok</button>
+        <button onClick={() => cleanWarning()}>Ok</button>
       </div>
     </Container>
   );

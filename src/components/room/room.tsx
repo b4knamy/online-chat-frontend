@@ -66,6 +66,7 @@ export default function Room({
         roomOwner={roomOwner}
         environmentSocket={environmentSocket}
         name={name}
+        isRoomOwner={roomOwner === currentUser}
       />
       <Chat messages={messages} currentUser={currentUser} />
       <Form chatSocket={chatSocket} room={name} />
