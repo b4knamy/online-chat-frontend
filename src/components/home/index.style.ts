@@ -11,7 +11,7 @@ export const HomeContainer = styled.main`
   display: flex;
   flex-direction: column;
   border-radius: 20px 20px 0px 0px;
-  overflow: hidden;
+  /* overflow: hidden; */
 `;
 
 export const Content = styled.div`

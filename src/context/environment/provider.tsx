@@ -10,6 +10,7 @@ export default function EnvironmentProvider({
   children: ReactNode;
 }) {
   const [state, dispatch] = useReducer(environmentReducer, initEnvironment);
+
   const [environmentSocket, setEnvironmentSocket] = useState<WebSocket | null>(
     null,
   );
@@ -36,11 +37,11 @@ export default function EnvironmentProvider({
 
     environmentWebSocket.onmessage = (event) => {
       const event_data: webSocketData = JSON.parse(event.data);
-      console.log(event_data);
+      // console.log(event_data);
       return actions.current.handleEvent(event_data);
     };
     environmentWebSocket.onclose = () => {
-      console.log('room socket is closed.');
+      console.log('environment websocket closed.');
     };
 
     setEnvironmentSocket(environmentWebSocket);
@@ -56,7 +57,10 @@ export default function EnvironmentProvider({
     state,
     environmentSocket,
     cleanWarning: actions.current.cleanWarning,
+    removeNotification: actions.current.removeNotification,
   };
+
+  console.log(state);
 
   return (
     <environmentContext.Provider value={valueProvider}>

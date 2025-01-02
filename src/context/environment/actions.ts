@@ -21,6 +21,8 @@ const environmentActions = (dispatch: environmentActionsDispatcher) => {
     setInitialGroups: (payload: GroupTyped[]) =>
       dispatch({ event_type: 'initial.groups', context: payload }),
     cleanWarning: () => dispatch({ event_type: 'cleanWarning' }),
+    removeNotification: (payload: string) =>
+      dispatch({ event_type: 'cleanNotification', context: payload }),
   };
 };
 
@@ -41,8 +43,13 @@ export type webSocketData =
   | removeRoomEvent
   | notifyEvent
   | initialGroups
-  | cleanWarning;
+  | cleanWarning
+  | removeNotification;
 
+type removeNotification = {
+  event_type: 'cleanNotification';
+  context: string;
+};
 export type cleanWarning = {
   event_type: 'cleanWarning';
 };
@@ -100,4 +107,10 @@ export type GroupTyped = {
   id: number;
   name: string;
   room_messages: MessageTyped[];
+};
+
+export type Notification = {
+  text: string;
+  id: string;
+  timestamp: number;
 };

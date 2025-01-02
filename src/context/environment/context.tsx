@@ -1,9 +1,10 @@
 import { createContext, useContext } from 'react';
 import { GroupTyped } from './../../components/home/hook';
+import { Notification } from './actions';
 
 export type initEnvironmentState = {
   groups: GroupTyped[];
-  notifications: string[];
+  notifications: Notification[];
   availableUsers: string[];
   warning: string;
   onlineUsers: number;
@@ -21,6 +22,7 @@ export type ValueProvider = {
   state: initEnvironmentState;
   environmentSocket: WebSocket;
   cleanWarning: () => void;
+  removeNotification: (payload: string) => void;
 };
 
 export const environmentContext = createContext<ValueProvider | null>(null);

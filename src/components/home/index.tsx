@@ -7,14 +7,23 @@ import { memo, useState } from 'react';
 import User from '../user/user';
 import Warning from '../groups/warning/warning';
 import useEnvironmentContext from '../../context/environment/context';
+import Notifications from '../notifications/notifications';
 
 export default function Home() {
+  const { state, environmentSocket, cleanWarning, removeNotification } =
+    useEnvironmentContext();
   const [currentUser, setCurrentUser] = useState('');
-  const { state, environmentSocket, cleanWarning } = useEnvironmentContext();
-  console.log('how many times I run?');
-
+  console.log('\n\n\n\n');
+  console.log(state.notifications);
+  console.log('\n\n\n\n');
   return (
     <HomeContainer>
+      {state.notifications.length > 0 && (
+        <Notifications
+          notifications={state.notifications}
+          removeNotification={removeNotification}
+        />
+      )}
       {state.warning && (
         <Warning warning={state.warning} cleanWarning={cleanWarning} />
       )}

@@ -1,4 +1,4 @@
-import { webSocketData } from './actions';
+import { Notification, webSocketData } from './actions';
 import { initEnvironmentState } from './context';
 
 const environmentReducer = (
@@ -6,19 +6,33 @@ const environmentReducer = (
   actions: webSocketData,
 ): initEnvironmentState => {
   switch (actions.event_type) {
+    case 'notify.user': {
+      const date = Date.now();
+      const notificationObj: Notification = {
+        text: actions.context.message,
+        id: date.toString(),
+        timestamp: date,
+      };
+      state.notifications.push(notificationObj);
+      return { ...state };
+    }
+    case 'cleanNotification': {
+      console.log('im passing here?');
+      console.log(actions);
+      state.notifications = state.notifications.filter(
+        (notification) => notification.id !== actions.context,
+      );
+      return { ...state };
+    }
     case 'available.users': {
       state.onlineUsers = actions.context.online_users;
       state.availableUsers = actions.context.available_users;
       return { ...state };
     }
-    case 'notify.user': {
-      return { ...state };
-    }
 
     case 'room.created': {
-      const updatedGroups = [...state.groups];
-      updatedGroups.push(actions.context);
-      state.groups = updatedGroups;
+      state.groups.push(actions.context);
+      state.groups = [...state.groups];
       return { ...state };
     }
 
